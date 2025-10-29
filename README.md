@@ -33,6 +33,17 @@ Tras la ejecución exitosa, la carpeta warehouse/ contendrá las subcarpetas dim
 
 ---
 
+## Arquitectura del Proyecto (Estructura ETL)
+
+El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino listo para el análisis (warehouse/).
+
+| Directorio | Contenido | Rol en el *Pipeline* |
+|---|---|---|
+
+
+
+
+
 ## Diccionario de datos y supuestos
 El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar el análisis de KPIs clave.
 
