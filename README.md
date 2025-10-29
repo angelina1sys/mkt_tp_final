@@ -66,6 +66,27 @@ Se considera un usuario activo si tiene un customer_id conocido en web_session, 
 
 ---
 
+## Esquemas estrella
+
+**1. Esquema Estrella: Ventas (`FACT_SALES`)**
+
+![Diagrama de Esquema Estrella para Fact_Sales](assets/esquema_1_fact_sales.png)
+
+**2. Esquema Estrella: Satisfacción (`FACT_NPS`)**
+
+![Diagrama de Esquema Estrella para Fact_NPS](assets/esquema_2_fact_nps.png)
+
+**3. Esquema Estrella: Actividad Web (`FACT_WEB_SESSION`)**
+
+![Diagrama de Esquema Estrella para Fact_Web_Session](assets/esquema_3_fact_web_session.png)
+
+**4. Esquema Estrella: Logística (`FACT_SHIPMENT`)**
+
+![Diagrama de Esquema Estrella para Fact_Shipment](assets/esquema_4_fact_shipment.png)
+
+---
+
+
 ## Consultas clave y lógica de KPIs
 
 Esta sección describe la lógica (similar a SQL o DAX) para calcular los KPIs en el dashboard.
