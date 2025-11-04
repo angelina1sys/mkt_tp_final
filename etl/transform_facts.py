@@ -44,6 +44,22 @@ def create_fact_sales(raw_data, dimensions):
     output_path = os.path.join(WAREHOUSE_FACT_PATH, 'fact_sales.csv')
     fact_sales[final_cols].to_csv(output_path, index=False)
     print(f"  -> fact_sales creada en: {output_path}")
+
+def create_fact_payment(raw_data, dimensions):
+    """
+    Crea la tabla de hechos de pago, usando la tabla RAW 'payment'.
+    PK: payment_pk, FK: order_id, date_id (paid_at).
+    """
+    df_payment = raw_data['payment'].copy()
+    
+    df_payment['payment_pk'] = df_payment.index + 1 # PK del Hecho
+    df_payment['date_id'] = get_date_id(df_payment, 'paid_at') # Derivado de paid_at
+    
+    final_cols = ['payment_pk', 'date_id', 'order_id', 'method', 'status', 'amount', 'transaction_ref']
+    
+    output_path = os.path.join(WAREHOUSE_FACT_PATH, 'fact_payment.csv')
+    df_payment[final_cols].to_csv(output_path, index=False)
+    print(f"  -> fact_payment creada en: {output_path}")
     
 def create_fact_nps(raw_data, dimensions):
     """Crea la tabla de hechos de respuesta NPS (Base para KPI de NPS)."""
@@ -134,6 +150,9 @@ def create_all_facts(raw_data, dimensions):
     
     print("  - Creando fact_sales...")
     create_fact_sales(raw_data, dimensions)
+
+    print("  - Creando fact_payment (Nueva)...")
+    create_fact_payment(raw_data, dimensions)
     
     print("  - Creando fact_nps...")
     create_fact_nps(raw_data, dimensions)

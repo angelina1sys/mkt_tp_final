@@ -89,19 +89,23 @@ Se considera un usuario activo si tiene un customer_id conocido en web_session, 
 
 **1. Esquema Estrella: Ventas (`FACT_SALES`)**
 
-![Diagrama de Esquema Estrella para Fact_Sales](assets/esquema_1_fact_sales.png)
+![Diagrama de Esquema Estrella para Fact_Sales](assets/Fact_Sales.png)
 
 **2. Esquema Estrella: Satisfacción (`FACT_NPS`)**
 
-![Diagrama de Esquema Estrella para Fact_NPS](assets/esquema_2_fact_nps.png)
+![Diagrama de Esquema Estrella para Fact_NPS](assets/Fact_NPS.png)
 
 **3. Esquema Estrella: Actividad Web (`FACT_WEB_SESSION`)**
 
-![Diagrama de Esquema Estrella para Fact_Web_Session](assets/esquema_3_fact_web_session.png)
+![Diagrama de Esquema Estrella para Fact_Web_Session](assets/Fact_Web_Session.png)
 
 **4. Esquema Estrella: Logística (`FACT_SHIPMENT`)**
 
-![Diagrama de Esquema Estrella para Fact_Shipment](assets/esquema_4_fact_shipment.png)
+![Diagrama de Esquema Estrella para Fact_Shipment](assets/Fact_Shipment.png)
+
+**5. Esquema Estrella: Pagos (`FACT_PAYMENT`)**
+
+![Diagrama de Esquema Estrella para Fact_Payment](assets/Fact_Payment.png)
 
 ---
 

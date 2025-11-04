@@ -6,6 +6,33 @@ WAREHOUSE_DIM_PATH = os.path.join('warehouse', 'dim')
 
 # --- Funciones de Creación de Dimensiones ---
 
+def create_dim_store(raw_data):
+    """
+    Crea la dimensión de tiendas físicas. 
+    Se simplifica la desnormalización al eliminar la información de la tabla 'address' faltante.
+    """
+    
+    # El archivo RAW debe llamarse 'store' (singular)
+    df_store = raw_data['store'][['store_id', 'name', 'address_id']].copy()
+        
+    # Creamos un DF simple y solo renombramos la columna 'name'
+    df_dim_store = df_store.rename(columns={'name': 'store_name'})
+
+    # Columnas que puedes mantener con la información que tienes de la consigna:
+    final_cols = [
+        'store_id', 
+        'store_name', 
+        'address_id'
+        # 'province_id' (No disponible sin tabla address)
+    ]
+    
+    dim_store = df_dim_store[final_cols]
+    output_path = os.path.join(WAREHOUSE_DIM_PATH, 'dim_stores.csv')
+    dim_store.to_csv(output_path, index=False)
+    print(f"  -> dim_stores creada en: {output_path}")
+
+    return dim_store
+
 def create_dim_calendar(raw_data):
     """
     Crea la dimensión de calendario a partir de todas las fechas de transacción.
@@ -137,5 +164,8 @@ def create_all_dims(raw_data):
     
     print("  - Creando dim_provinces...")
     dimensions['province'] = create_dim_province(raw_data)
+
+    print("  - Creando dim_stores...")
+    dimensions['store'] = create_dim_store(raw_data)
     
     return dimensions
