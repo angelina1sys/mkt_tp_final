@@ -62,7 +62,7 @@ El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar
 
 | Tabla (granularidad) | Uso principal (KPIs) | PK | FKs clave |
 |---|---|---|---|
-| fact_sales (Línea de Pedido) | Ventas, ticket promedio, ranking por producto | order_item_pk | date_id, product_id, channel_id, shipping_province_id |
+| ```fact_sales``` (Línea de Pedido) | Ventas, ticket promedio, ranking por producto | ```order_item_pk``` | ```date_id```, ```product_id```, ```channel_id```, ```shipping_province_id``` |
 | fact_sales_order (Cabecera de Pedido) | Análisis de órdenes, filtrado por status y canales | order_id_pk | channel_id, date_id, customer_id |
 | fact_web_session (Sesión Web) | Usuarios activos  | session_pk | start_date_id, customer_id |
 | fact_nps_response (Respuesta NPS) | NPS | nps_pk | date_id, customer_id, channel_id |
