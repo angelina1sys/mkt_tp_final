@@ -11,25 +11,26 @@ A partir de un conjunto de datos transaccionales de una empresa de comercio elec
 
 El proyecto fue desarrollado siguiendo buenas prácticas de ingeniería de datos: modularización del código, control de versiones con Git, entorno virtual gestionado con ```venv``` y documentación completa mediante este archivo ```README.md```.
 
-## Instrucciones de Ejecución Local:
+## 🚀 Instrucciones de Ejecución Local:
 Para reproducir el pipeline de datos, sigue los siguientes pasos desde la terminal.
 
-## 1- Clonar el Repositorio
+## 1️⃣ Clonar el Repositorio
 
 **Cambia 'TU_USUARIO' por tu nombre de usuario de GitHub**
-git clone https://github.com/TU_USUARIO/mkt_tp_final.git
-cd mkt_tp_final
+```git clone https://github.com/TU_USUARIO/mkt_tp_final.git
+cd mkt_tp_final```
 
-## 2- Crear y Activar un Entorno Visual
+## 2️⃣ Crear y Activar un Entorno Visual
 
-**Crear entorno virtual**
+
+```# Crear entorno virtual
 python3 -m venv .venv
 
-**Activar en macOS/Linux**
+# Activar en macOS/Linux
 source .venv/bin/activate
 
-**Activar en Windows (PowerShell)**
-.\.venv\Scripts\Activate
+# Activar en Windows (PowerShell)
+.\.venv\Scripts\Activate```
 
 ## 3- Instalar dependencias
 pip install -r requirements.txt
@@ -50,16 +51,16 @@ El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino li
 
 ```
 ├── assets/                  # Diagramas, capturas o imágenes del proyecto
-├── dashboard.pbix           # Entregable final: Tablero de visualización de Power BI.
+├── dashboard.pbix           # Tablero de visualización de Power BI
 ├── etl/                     # Lógica ETL (Extract, Transform, Load) en scripts Python
-│   ├── transform_dims.py    # Scripts para la creación y desnormalización de Dimensiones.
+│   ├── transform_dims.py    # Scripts para la creación y desnormalización de Dimensiones
 │   └── transform_facts.py   # Scripts para la creación de Tablas de Hechos
 ├── RAW/                     # Datos fuente originales (.csv) provistos por el profesor
-├── warehouse/               # Data Warehouse (DW) - Contiene los archivos .csv finales listos para el análisis
+├── warehouse/               # Data Warehouse - Contiene los archivos .csv finales listos para el análisis
 │   ├── dim/                 # Tablas de Dimensiones desnormalizadas
 │   └── fact/                # Tablas de Hechos desnormalizadas
-├── .gitignore               # Archivos y carpetas ignorados por Git.
-├── LICENSE                  # Licencia del proyecto.
+├── .gitignore               # Archivos y carpetas ignorados por Git
+├── LICENSE                  # Licencia del proyecto
 ├── main.py                  # Script principal para orquestar la ejecución del ETL
 ├── requirements.txt         # Archivo con las dependencias Python requeridas 
 └── README.md                # Documentación del proyecto
