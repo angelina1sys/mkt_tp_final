@@ -34,14 +34,14 @@ cd mkt_tp_final
 **Activar en Windows (PowerShell)**
 ```.\.venv\Scripts\Activate```
 
-## 3- Instalar dependencias
+## 3️⃣ Instalar dependencias
 pip install -r requirements.txt
 
-## 4- Ejecutar el Pipeline de transformación
+## 4️⃣ Ejecutar el Pipeline de transformación
 El script main.py leerá los datos de data/raw/, construirá el esquema estrella y guardará los resultados en warehouse/.
 python main.py
 
-## 5- Verificar la salida
+## 5️⃣ Verificar la salida
 Tras la ejecución exitosa, la carpeta warehouse/ contendrá las subcarpetas dim/ y fact/ con los datos transformados listos para ser usados en Power BI.
 
 
@@ -69,10 +69,10 @@ El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino li
 ```
 
 
-## Diccionario de datos y supuestos
+## 🧾 Diccionario de datos y supuestos
 El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar el análisis de KPIs clave.
 
-**A- Tablas de Hechos - Fact Tables**
+**📊 Tablas de Hechos - Fact Tables**
 
 | Tabla (granularidad) | Uso principal (KPIs) | PK | FKs clave |
 |---|---|---|---|
@@ -81,7 +81,7 @@ El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar
 | ```fact_web_session``` (Sesión Web) | Usuarios activos  | ```session_pk``` | ```start_date_id```, ```customer_id``` |
 | ```fact_nps_response``` (Respuesta NPS) | NPS | ```nps_pk``` | ```date_id```, ```customer_id```, ```channel_id``` |
 
-**B- Tablas de Dimensiones - Dimension Tables**
+**📊 Tablas de Dimensiones - Dimension Tables**
 | Tabla | Propósito Analítico |
 |---|---|
 | ```dim_calendar``` | Series temporales y agrupación mensual/trimestral |
@@ -90,7 +90,7 @@ El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar
 | ```dim_channel``` | Filtro por Canal de Venta (Online/Offline) |
 | ```dim_province``` |Análisis geográfico (Ventas por provincia) |
 
-**C- Supuestos del modelado**
+**🧩 Supuestos del modelado**
 
 **Ventas por Provincia**
 Se utiliza el province_id de la dirección de envío (shipping_address_id) para el cálculo geográfico de Ventas.
@@ -103,36 +103,36 @@ Se considera un usuario activo si tiene un customer_id conocido en web_session, 
 
 ---
 
-## Esquemas estrella
+## ⭐ Esquemas estrella
 
-**1. Esquema Estrella: Ventas (```FACT_SALES```)**
+**Esquema Estrella: Ventas (```FACT_SALES```)**
 
 ![Diagrama de Esquema Estrella para Fact_Sales](assets/Fact_Sales.png)
 
-**2. Esquema Estrella: Cabecera de pedido (```FACT_SALES_ORDER```)**
+**Esquema Estrella: Cabecera de pedido (```FACT_SALES_ORDER```)**
 
 ![Diagrama de Esquema Estrella para Fact_Sales_Order](assets/Fact_Sales_Order.png)
 
-**3. Esquema Estrella: Satisfacción (```FACT_NPS```)**
+**Esquema Estrella: Satisfacción (```FACT_NPS```)**
 
 ![Diagrama de Esquema Estrella para Fact_NPS](assets/Fact_NPS.png)
 
-**4. Esquema Estrella: Actividad Web (```FACT_WEB_SESSION```)**
+**Esquema Estrella: Actividad Web (```FACT_WEB_SESSION```)**
 
 ![Diagrama de Esquema Estrella para Fact_Web_Session](assets/Fact_Web_Session.png)
 
-**5. Esquema Estrella: Logística (```FACT_SHIPMENT```)**
+**Esquema Estrella: Logística (```FACT_SHIPMENT```)**
 
 ![Diagrama de Esquema Estrella para Fact_Shipment](assets/Fact_Shipment.png)
 
-**6. Esquema Estrella: Pagos (```FACT_PAYMENT```)**
+**Esquema Estrella: Pagos (```FACT_PAYMENT```)**
 
 ![Diagrama de Esquema Estrella para Fact_Payment](assets/Fact_Payment.png)
 
 ---
 
 
-## Consultas clave y lógica de KPIs
+## 🎯 Consultas clave y lógica de KPIs
 
 Esta sección describe la lógica (DAX) para calcular los KPIs en el dashboard.
 
@@ -143,6 +143,7 @@ Esta sección describe la lógica (DAX) para calcular los KPIs en el dashboard.
 
 ---
 
-## Dashboard Final Power BI
-Enlace al tablero
+## 📊 Dashboard Final Power BI
+Enlace al tablero:
+
 
