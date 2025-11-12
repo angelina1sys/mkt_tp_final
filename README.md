@@ -60,7 +60,7 @@ El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino li
 | ```venv``` | Carpeta que contiene el entorno visual aislado | *Buenas prácticas* (Aislamiento de dependencias) |
 
 
-.
+```
 ├── assets/                  # Diagramas, capturas o imágenes del proyecto
 ├── dashboard.pbix           # Entregable final: Tablero de visualización de Power BI.
 ├── etl/                     # Lógica ETL (Extract, Transform, Load) en scripts Python
@@ -75,6 +75,7 @@ El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino li
 ├── main.py                  # Script principal para orquestar la ejecución del ETL
 ├── requirements.txt         # Archivo con las dependencias Python requeridas 
 └── README.md                # Documentación del proyecto
+```
 
 
 ## Diccionario de datos y supuestos
