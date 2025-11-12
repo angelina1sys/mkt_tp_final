@@ -35,6 +35,7 @@ Activar en Windows (PowerShell)
 ```.\.venv\Scripts\Activate```
 
 **3️⃣ Instalar dependencias**
+
 pip install -r requirements.txt
 
 **4️⃣ Ejecutar el Pipeline de transformación**
