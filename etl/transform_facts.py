@@ -12,40 +12,33 @@ def get_date_id(df, date_col):
 # --- Funciones de Creación de Hechos ---
 
 def create_fact_sales(raw_data, dimensions):
-    """
-    Crea la tabla de hechos de cabecera de pedidos (granularidad: orden), 
-    usando las columnas específicas solicitadas. Esta es la nueva versión.
-    """
-    # 1. Cargar datos y asegurar una copia
-    df_sales_order = raw_data['sales_order'].copy()
+    """Crea la tabla de hechos de ventas (granularidad: ítem)."""
     
-    # 2. Creación de Claves Foráneas
-    df_sales_order['date_id'] = get_date_id(df_sales_order, 'order_date')
+    # 1. Unir ítems con cabecera de orden
+    df_items = raw_data['sales_order_item'].copy()
+    df_orders = raw_data['sales_order'].copy()
+    fact_sales = pd.merge(df_items, df_orders, on='order_id', how='left', suffixes=('_item', '_order'))
+
+    # 2. Enlace Geográfico (Provincia de envío para KPI Ventas por Provincia)
+    df_address = raw_data['address'][['address_id', 'province_id']].copy()
     
-    # 3. Selección de Columnas (las solicitadas)
-    final_cols = [
-        'order_id',          # PK / Dimensión Degenerada
-        'customer_id',       # FK
-        'channel_id',        # FK
-        'store_id',          # FK
-        'order_date', 
-        'date_id',           # FK a dim_calendar
-        'billing_address_id', 
-        'shipping_address_id', 
-        'status', 
-        'currency_code', 
-        'subtotal', 
-        'tax_amount', 
-        'shipping_fee', 
-        'total_amount'       # Métrica clave
-    ]
+    fact_sales = pd.merge(
+        fact_sales, 
+        df_address, 
+        left_on='shipping_address_id', 
+        right_on='address_id', 
+        how='left'
+    ).rename(columns={'province_id': 'shipping_province_id'})
     
-    fact_sales = df_sales_order[final_cols].copy()
+    # 3. Creación de Claves (PKs del Hecho y FKs)
+    fact_sales['order_item_pk'] = fact_sales.index + 1 # PK del Hecho
+    fact_sales['date_id'] = get_date_id(fact_sales, 'order_date')
     
-    # 4. Carga
-    output_path = os.path.join(WAREHOUSE_FACT_PATH, 'fact_sales.csv')
+    
+    output_path = os.path.join(WAREHOUSE_FACT_PATH, 'fact_sales_order_item.csv')
     fact_sales.to_csv(output_path, index=False)
-    print(f"  -> fact_sales (Header Granularity) creada en: {output_path}")
+    print(f"  -> fact_sales_order_item creada en: {output_path}")
+
 
 def create_fact_payment(raw_data, dimensions):
     """
@@ -147,40 +140,63 @@ def create_fact_shipment(raw_data, dimensions):
 
 def create_fact_sales_order(raw_data, dimensions):
     """
-    Crea la tabla de hechos de cabecera de pedidos (granularidad: orden).
-    Utiliza sales_order de RAW.
+    Crea la tabla de hechos de cabecera de pedidos (granularidad: orden), 
+    reemplazando shipping_address_id por la FK shipping_province_id.
     """
-    # 1. Seleccionar la tabla y asegurar una copia
+    
+    
+    # 1. Cargar datos base y asegurar una copia
     df_sales_order = raw_data['sales_order'].copy()
     
-    # 2. Creación de Claves Primarias y Foráneas
-    # order_id actúa como clave natural/primaria para este hecho.
+    # --- PASO DE UNIÓN: Crear el Enlace de Provincia ---
+    
+    # 1.1. Obtener la tabla address de RAW
+    df_address = raw_data['address'][['address_id', 'province_id']].copy()
+    
+    # 1.2. Unir df_sales_order con address usando shipping_address_id
+    # Se añade la columna 'province_id' a la tabla de hechos.
+    df_sales_order = pd.merge(
+        df_sales_order,
+        df_address,
+        left_on='shipping_address_id',
+        right_on='address_id',
+        how='left'
+    )
+    
+    # 1.3. Renombrar la columna obtenida para el DW
+    df_sales_order.rename(columns={'province_id': 'shipping_province_id'}, inplace=True)
+    
+    # 2. Creación de Claves Foráneas (Time)
+    # Asumo que get_date_id está definida en tu script
     df_sales_order['date_id'] = get_date_id(df_sales_order, 'order_date')
     
-    # 3. Selección de Columnas (todas las solicitadas)
+    # 3. Selección de Columnas Finales
     final_cols = [
-        'order_id', 
-        'customer_id', 
-        'channel_id', 
-        'store_id', 
+        'order_id',                  # PK / Dimensión Degenerada
+        'customer_id',               # FK
+        'channel_id',                # FK
+        'store_id',                  # FK
         'order_date', 
-        'date_id',             
-        'billing_address_id', 
-        'shipping_address_id', 
+        'date_id',                   # FK a dim_calendar
+        'billing_address_id',        # Atributo/FK original (se mantiene)
+        'shipping_province_id',      # NUEVA FK a dim_province
         'status', 
         'currency_code', 
         'subtotal', 
         'tax_amount', 
         'shipping_fee', 
-        'total_amount'
+        'total_amount'               # Métrica clave
     ]
     
-    fact_sales_order = df_sales_order[final_cols].copy()
+    # NOTA: Debemos eliminar la columna 'shipping_address_id' original y 'address_id' del merge.
+    # El merge anterior ya dejó 'shipping_province_id' en df_sales_order.
+    
+    fact_sales = df_sales_order[final_cols].copy()
     
     # 4. Carga
     output_path = os.path.join(WAREHOUSE_FACT_PATH, 'fact_sales_order.csv')
-    fact_sales_order.to_csv(output_path, index=False)
-    print(f"  -> fact_sales_order creada en: {output_path}")
+    fact_sales.to_csv(output_path, index=False)
+    print(f"  -> fact_sales_order (Header Granularity) creada con FK de Provincia en: {output_path}")
 
 # --- Función Orquestadora ---
 

@@ -108,13 +108,13 @@ Se considera un usuario activo si tiene un customer_id conocido en web_session, 
 
 ## ⭐ Esquemas estrella
 
-**Esquema Estrella: Ventas (```FACT_SALES```)**
-
-![Diagrama de Esquema Estrella para Fact_Sales](assets/Fact_Sales.png)
-
-**Esquema Estrella: Cabecera de pedido (```FACT_SALES_ORDER```)**
+**Esquema Estrella: Ventas (```FACT_SALES_ORDER```)**
 
 ![Diagrama de Esquema Estrella para Fact_Sales_Order](assets/Fact_Sales_Order.png)
+
+**Esquema Estrella: Cabecera de pedido (```FACT_SALES_ORDER_ITEM```)**
+
+![Diagrama de Esquema Estrella para Fact_Sales_Order_Item](assets/Fact_Sales_Order_Item.png)
 
 **Esquema Estrella: Satisfacción (```FACT_NPS```)**
 
