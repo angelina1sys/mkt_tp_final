@@ -20,8 +20,8 @@ Para reproducir el pipeline de datos, sigue los siguientes pasos desde la termin
 ## 1️⃣ Clonar el Repositorio
 
 **Cambia 'TU_USUARIO' por tu nombre de usuario de GitHub**
-```git clone https://github.com/TU_USUARIO/mkt_tp_final.git
-cd mkt_tp_final```
+git clone https://github.com/TU_USUARIO/mkt_tp_final.git
+cd mkt_tp_final
 
 ## 2️⃣ Crear y Activar un Entorno Visual
 
