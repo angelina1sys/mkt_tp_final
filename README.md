@@ -1,3 +1,4 @@
+<img src="assets/Eco_Bottle_Logo.png" alt="Logo de EcoBottle AR" width="40" align="left"> TP Final: Ecosistema de Datos de Marketing (EcoBottle)
 # ♻️ Trabajo Práctico Final EcoBottle — Introducción al Marketing Online y los Negocios Digitales
 
 El presente trabajo práctico tiene como objetivo aplicar los conocimientos adquiridos **sobre procesos ETL (Extract, Transform, Load), modelado de datos y visualización de información**, desarrollando un **Data Warehouse** y un **dashboard analítico** en Power BI.
@@ -148,7 +149,9 @@ Esta sección describe la lógica (DAX) para calcular los KPIs en el dashboard.
 
 ## 📊 Dashboard Final Power BI
 
+
 ![Tablero PowerBI](assets/Tablero.png)
+
 
 **Enlace al tablero 🧷:**
 
