@@ -5,12 +5,14 @@ El objetivo es diseñar e implementar un mini-ecosistema de datos comercial (onl
 ## Instrucciones de Ejecución Local:
 Para reproducir el pipeline de datos, sigue los siguientes pasos desde la terminal.
 
-**1- Clonar el Repositorio**
+## 1- Clonar el Repositorio
+
 **Cambia 'TU_USUARIO' por tu nombre de usuario de GitHub**
 git clone https://github.com/TU_USUARIO/mkt_tp_final.git
 cd mkt_tp_final
 
-**2- Crear y Activar un Entorno Visual**
+## 2- Crear y Activar un Entorno Visual
+
 **Crear entorno virtual**
 python3 -m venv .venv
 
@@ -20,15 +22,15 @@ source .venv/bin/activate
 **Activar en Windows (PowerShell)**
 .\.venv\Scripts\Activate
 
-**3- Instalar dependencias**
+## 3- Instalar dependencias
 pip install -r requirements.txt
 
-**4- Ejecutar el Pipeline de transformación**
+## 4- Ejecutar el Pipeline de transformación
 El script main.py leerá los datos de data/raw/, construirá el esquema estrella y guardará los resultados en warehouse/.
 python main.py
 
-**5- Verificar la salida**
-Tras la ejecución exitosa, la carpeta warehouse/ contendrá las subcarpetas dim/ y fact/ con los datos transformados listos para ser usados en Looker Studio.
+## 5- Verificar la salida
+Tras la ejecución exitosa, la carpeta warehouse/ contendrá las subcarpetas dim/ y fact/ con los datos transformados listos para ser usados en Power BI.
 
 
 ---
@@ -40,12 +42,13 @@ El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino li
 | Directorio | Contenido | Rol en el *Pipeline* |
 |---|---|---|
 | raw/ | Archivos .CSV fuente que simulan la base de datos transaccional (OLTP) | *Fuente de datos* (Extracción) |
-| etl/ | scripts de Python (transform_dims.py, transform_facts.py) com lógica de negocio | *Transfor,ación (Lógica de limpieza y modelado) |
+| etl/ | scripts de Python (transform_dims.py, transform_facts.py) com lógica de negocio | *Transformación (Lógica de limpieza y modelado) |
 | main.py | Script orquestador que ejecuta la secuencia completa del ETL | *Control y Ejecución* del pipeline |
 | warehouse/ | Archivos .CSV finales listos para ser consumidos por Power BI | *Data Warehouse* (Carga) |
+| Dashboard | El tablero final de visualización de datos de EcoBottle, creado en Power BI | *Visualización* (Frontend Analítico) |
 | requirements.txt | Lista de librerías y versiones exactas para la gestión del entorno virtual | *Buenas Prácticas* (Entorno) |
-| assets/ | Contiene los diagramas y capturas de pantalla de los esquemas estrella | *Documentación VIsual* y entregables |
-| venv | Carpeta que contiene el entorno visual aislado | *Buenas prácticas* (AIslamiento de dependencias) |
+| assets/ | Contiene los diagramas y capturas de pantalla de los esquemas estrella | *Documentación Visual* y entregables |
+| venv | Carpeta que contiene el entorno visual aislado | *Buenas prácticas* (Aislamiento de dependencias) |
 
 
 
@@ -59,7 +62,8 @@ El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar
 
 | Tabla (granularidad) | Uso principal (KPIs) | PK | FKs clave |
 |---|---|---|---|
-| fact_sales (Línea de Pedido) | Ventas, Ticket promedio, Ranking por producto | order_item_pk | date_id, product_id, channel_id, shipping_province_id |
+| fact_sales (Línea de Pedido) | Ventas, ticket promedio, ranking por producto | order_item_pk | date_id, product_id, channel_id, shipping_province_id |
+| facr_sales_order (Cabecera de Pedido) | Análisis de órdenes, filtrado por status y canales | order_id_pk | channer_id, date_id, customer_id |
 | fact_web_session (Sesión Web) | Usuarios activos  | session_pk | start_date_id, customer_id |
 | fact_nps_response (Respuesta NPS) | NPS | nps_pk | date_id, customer_id, channel_id |
 
@@ -91,19 +95,23 @@ Se considera un usuario activo si tiene un customer_id conocido en web_session, 
 
 ![Diagrama de Esquema Estrella para Fact_Sales](assets/Fact_Sales.png)
 
-**2. Esquema Estrella: Satisfacción (`FACT_NPS`)**
+**2. Esquema Estrella: Cabecera de pedido (`FACT_SALES_ORDER`)**
+
+![Diagrama de Esquema Estrella para Fact_Sales_Order](assets/Fact_Sales_Order.png)
+
+**3. Esquema Estrella: Satisfacción (`FACT_NPS`)**
 
 ![Diagrama de Esquema Estrella para Fact_NPS](assets/Fact_NPS.png)
 
-**3. Esquema Estrella: Actividad Web (`FACT_WEB_SESSION`)**
+**4. Esquema Estrella: Actividad Web (`FACT_WEB_SESSION`)**
 
 ![Diagrama de Esquema Estrella para Fact_Web_Session](assets/Fact_Web_Session.png)
 
-**4. Esquema Estrella: Logística (`FACT_SHIPMENT`)**
+**5. Esquema Estrella: Logística (`FACT_SHIPMENT`)**
 
 ![Diagrama de Esquema Estrella para Fact_Shipment](assets/Fact_Shipment.png)
 
-**5. Esquema Estrella: Pagos (`FACT_PAYMENT`)**
+**6. Esquema Estrella: Pagos (`FACT_PAYMENT`)**
 
 ![Diagrama de Esquema Estrella para Fact_Payment](assets/Fact_Payment.png)
 
@@ -112,18 +120,32 @@ Se considera un usuario activo si tiene un customer_id conocido en web_session, 
 
 ## Consultas clave y lógica de KPIs
 
-Esta sección describe la lógica (similar a SQL o DAX) para calcular los KPIs en el dashboard.
+Esta sección describe la lógica (DAX) para calcular los KPIs en el dashboard.
 
-| KPI | Lógica de agregación | Base de Datos (Tablas DW) |
+| KPI | Lógica de agregación |
 |---|---|---|
-| Total Ventas ($M) | SUM(total_amount_order) | fact_sales (filtrando status = PAID / FULFILLED) |
-| Ticket Promedio ($K) | SUM(total_amount_order) / COUNT(DISTINCT order_id) | fact_sales (filtrando status = PAID / FULFILLED) |
-| Usuarios activos (nK) | COUNT(DISTINCT customer_id) | fact_web_session |
-| NPS | ((%Promotores - %Detractores)) x 100 | fact_nps_response (Score 9-10 Promotor, 0-6 Detractor) |
-| Ranking por producto | SUM(line_total) agrupado por product_id y date.month | fact_sales y dim_calendar |
+| Usuarios activos (nK) | DISTINCTCOUNT('fact_web_session'[customer_id]) | 
+| NPS |VAR Total_Respuestas = COUNTROWS('fact_nps')
+VAR Promotores = 
+    CALCULATE(
+        COUNTROWS('fact_nps'),
+        'fact_nps'[nps_category] = "Promoter"
+    )
+
+VAR Detractores = 
+    CALCULATE(
+        COUNTROWS('fact_nps'),
+        'fact_nps'[nps_category] = "Detractor"
+    )
+
+VAR Porcentaje_Promotores = DIVIDE(Promotores, Total_Respuestas, 0)
+VAR Porcentaje_Detractores = DIVIDE(Detractores, Total_Respuestas, 0)
+
+RETURN 
+    (Porcentaje_Promotores - Porcentaje_Detractores) * 100 |
 
 ---
 
-## Dashboard Final Looker Studio
-Enlace al tablero de Looker Studio
-(enlace)
+## Dashboard Final Power BI
+Enlace al tablero
+

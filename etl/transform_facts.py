@@ -143,6 +143,43 @@ def create_fact_shipment(raw_data, dimensions):
     df_shipment[final_cols].to_csv(output_path, index=False)
     print(f"  -> fact_shipment creada en: {output_path}")
 
+def create_fact_sales_order(raw_data, dimensions):
+    """
+    Crea la tabla de hechos de cabecera de pedidos (granularidad: orden).
+    Utiliza sales_order de RAW.
+    """
+    # 1. Seleccionar la tabla y asegurar una copia
+    df_sales_order = raw_data['sales_order'].copy()
+    
+    # 2. Creación de Claves Primarias y Foráneas
+    # order_id actúa como clave natural/primaria para este hecho.
+    df_sales_order['date_id'] = get_date_id(df_sales_order, 'order_date')
+    
+    # 3. Selección de Columnas (todas las solicitadas)
+    final_cols = [
+        'order_id', 
+        'customer_id', 
+        'channel_id', 
+        'store_id', 
+        'order_date', 
+        'date_id',             
+        'billing_address_id', 
+        'shipping_address_id', 
+        'status', 
+        'currency_code', 
+        'subtotal', 
+        'tax_amount', 
+        'shipping_fee', 
+        'total_amount'
+    ]
+    
+    fact_sales_order = df_sales_order[final_cols].copy()
+    
+    # 4. Carga
+    output_path = os.path.join(WAREHOUSE_FACT_PATH, 'fact_sales_order.csv')
+    fact_sales_order.to_csv(output_path, index=False)
+    print(f"  -> fact_sales_order creada en: {output_path}")
+
 # --- Función Orquestadora ---
 
 def create_all_facts(raw_data, dimensions):
@@ -150,6 +187,9 @@ def create_all_facts(raw_data, dimensions):
     
     print("  - Creando fact_sales...")
     create_fact_sales(raw_data, dimensions)
+
+    print("  - Creando fact_sales_order...")
+    create_fact_sales_order(raw_data, dimensions)
 
     print("  - Creando fact_payment (Nueva)...")
     create_fact_payment(raw_data, dimensions)
