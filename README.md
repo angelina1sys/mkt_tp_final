@@ -38,12 +38,10 @@ Activar en Windows (PowerShell)
 pip install -r requirements.txt
 
 **4️⃣ Ejecutar el Pipeline de transformación**
-
 El script main.py leerá los datos de data/raw/, construirá el esquema estrella y guardará los resultados en warehouse/.
 python main.py
 
 **5️⃣ Verificar la salida**
-
 Tras la ejecución exitosa, la carpeta warehouse/ contendrá las subcarpetas dim/ y fact/ con los datos transformados listos para ser usados en Power BI.
 
 
