@@ -42,10 +42,10 @@ El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino li
 | Directorio | Contenido | Rol en el *Pipeline* |
 |---|---|---|
 | raw/ | Archivos .CSV fuente que simulan la base de datos transaccional (OLTP) | *Fuente de datos* (Extracción) |
-| etl/ | scripts de Python (transform_dims.py, transform_facts.py) com lógica de negocio | *Transformación (Lógica de limpieza y modelado) |
+| etl/ | scripts de Python (transform_dims.py, transform_facts.py) com lógica de negocio | *Transformación* (Lógica de limpieza y modelado) |
 | main.py | Script orquestador que ejecuta la secuencia completa del ETL | *Control y Ejecución* del pipeline |
 | warehouse/ | Archivos .CSV finales listos para ser consumidos por Power BI | *Data Warehouse* (Carga) |
-| Dashboard | El tablero final de visualización de datos de EcoBottle, creado en Power BI | *Visualización* (Frontend Analítico) |
+| dashboard | El tablero final de visualización de datos de EcoBottle, creado en Power BI | *Visualización* (Frontend Analítico) |
 | requirements.txt | Lista de librerías y versiones exactas para la gestión del entorno virtual | *Buenas Prácticas* (Entorno) |
 | assets/ | Contiene los diagramas y capturas de pantalla de los esquemas estrella | *Documentación Visual* y entregables |
 | venv | Carpeta que contiene el entorno visual aislado | *Buenas prácticas* (Aislamiento de dependencias) |
@@ -63,7 +63,7 @@ El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar
 | Tabla (granularidad) | Uso principal (KPIs) | PK | FKs clave |
 |---|---|---|---|
 | fact_sales (Línea de Pedido) | Ventas, ticket promedio, ranking por producto | order_item_pk | date_id, product_id, channel_id, shipping_province_id |
-| facr_sales_order (Cabecera de Pedido) | Análisis de órdenes, filtrado por status y canales | order_id_pk | channer_id, date_id, customer_id |
+| fact_sales_order (Cabecera de Pedido) | Análisis de órdenes, filtrado por status y canales | order_id_pk | channel_id, date_id, customer_id |
 | fact_web_session (Sesión Web) | Usuarios activos  | session_pk | start_date_id, customer_id |
 | fact_nps_response (Respuesta NPS) | NPS | nps_pk | date_id, customer_id, channel_id |
 
@@ -123,26 +123,9 @@ Se considera un usuario activo si tiene un customer_id conocido en web_session, 
 Esta sección describe la lógica (DAX) para calcular los KPIs en el dashboard.
 
 | KPI | Lógica de agregación |
-|---|---|---|
-| Usuarios activos (nK) | DISTINCTCOUNT('fact_web_session'[customer_id]) | 
-| NPS |VAR Total_Respuestas = COUNTROWS('fact_nps')
-VAR Promotores = 
-    CALCULATE(
-        COUNTROWS('fact_nps'),
-        'fact_nps'[nps_category] = "Promoter"
-    )
-
-VAR Detractores = 
-    CALCULATE(
-        COUNTROWS('fact_nps'),
-        'fact_nps'[nps_category] = "Detractor"
-    )
-
-VAR Porcentaje_Promotores = DIVIDE(Promotores, Total_Respuestas, 0)
-VAR Porcentaje_Detractores = DIVIDE(Detractores, Total_Respuestas, 0)
-
-RETURN 
-    (Porcentaje_Promotores - Porcentaje_Detractores) * 100 |
+|---|---|
+| Usuarios activos (nK) | ```DISTINCTCOUNT('fact_web_session'[customer_id])``` |
+| NPS | ```VAR Total_Respuestas = COUNTROWS('fact_nps') VAR Promotores = CALCULATE( COUNTROWS('fact_nps'), 'fact_nps'[nps_category] = "Promoter" ) VAR Detractores = CALCULATE( COUNTROWS('fact_nps'), 'fact_nps'[nps_category] = "Detractor" ) VAR Porcentaje_Promotores = DIVIDE(Promotores, Total_Respuestas, 0) VAR Porcentaje_Detractores = DIVIDE(Detractores, Total_Respuestas, 0) RETURN (Porcentaje_Promotores - Porcentaje_Detractores) * 100``` |
 
 ---
 
