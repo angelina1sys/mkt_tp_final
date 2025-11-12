@@ -12,38 +12,40 @@ def get_date_id(df, date_col):
 # --- Funciones de Creación de Hechos ---
 
 def create_fact_sales(raw_data, dimensions):
-    """Crea la tabla de hechos de ventas (granularidad: ítem)."""
+    """
+    Crea la tabla de hechos de cabecera de pedidos (granularidad: orden), 
+    usando las columnas específicas solicitadas. Esta es la nueva versión.
+    """
+    # 1. Cargar datos y asegurar una copia
+    df_sales_order = raw_data['sales_order'].copy()
     
-    # 1. Unir ítems con cabecera de orden
-    df_items = raw_data['sales_order_item'].copy()
-    df_orders = raw_data['sales_order'][['order_id', 'order_date', 'customer_id', 
-                                          'channel_id', 'status', 'total_amount', 
-                                          'shipping_address_id']].copy()
-    fact_sales = pd.merge(df_items, df_orders, on='order_id', how='left')
-
-    # 2. Enlace Geográfico (Provincia de envío para KPI Ventas por Provincia)
-    df_address = raw_data['address'][['address_id', 'province_id']].copy()
+    # 2. Creación de Claves Foráneas
+    df_sales_order['date_id'] = get_date_id(df_sales_order, 'order_date')
     
-    fact_sales = pd.merge(
-        fact_sales, 
-        df_address, 
-        left_on='shipping_address_id', 
-        right_on='address_id', 
-        how='left'
-    ).rename(columns={'province_id': 'shipping_province_id'})
+    # 3. Selección de Columnas (las solicitadas)
+    final_cols = [
+        'order_id',          # PK / Dimensión Degenerada
+        'customer_id',       # FK
+        'channel_id',        # FK
+        'store_id',          # FK
+        'order_date', 
+        'date_id',           # FK a dim_calendar
+        'billing_address_id', 
+        'shipping_address_id', 
+        'status', 
+        'currency_code', 
+        'subtotal', 
+        'tax_amount', 
+        'shipping_fee', 
+        'total_amount'       # Métrica clave
+    ]
     
-    # 3. Creación de Claves (PKs del Hecho y FKs)
-    fact_sales['order_item_pk'] = fact_sales.index + 1 # PK del Hecho
-    fact_sales['date_id'] = get_date_id(fact_sales, 'order_date')
+    fact_sales = df_sales_order[final_cols].copy()
     
-    # 4. Seleccionar columnas finales
-    final_cols = ['order_item_pk', 'date_id', 'order_id', 'customer_id', 'product_id', 
-                  'channel_id', 'shipping_province_id', 'quantity', 'line_total', 
-                  'total_amount', 'status']
-    
+    # 4. Carga
     output_path = os.path.join(WAREHOUSE_FACT_PATH, 'fact_sales.csv')
-    fact_sales[final_cols].to_csv(output_path, index=False)
-    print(f"  -> fact_sales creada en: {output_path}")
+    fact_sales.to_csv(output_path, index=False)
+    print(f"  -> fact_sales (Header Granularity) creada en: {output_path}")
 
 def create_fact_payment(raw_data, dimensions):
     """
@@ -185,7 +187,7 @@ def create_fact_sales_order(raw_data, dimensions):
 def create_all_facts(raw_data, dimensions):
     """Orquesta la creación de todas las tablas de hechos."""
     
-    print("  - Creando fact_sales...")
+    print("  - Creando fact_sales (Header Granularity)...")
     create_fact_sales(raw_data, dimensions)
 
     print("  - Creando fact_sales_order...")

@@ -63,18 +63,18 @@ El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar
 | Tabla (granularidad) | Uso principal (KPIs) | PK | FKs clave |
 |---|---|---|---|
 | ```fact_sales``` (Línea de Pedido) | Ventas, ticket promedio, ranking por producto | ```order_item_pk``` | ```date_id```, ```product_id```, ```channel_id```, ```shipping_province_id``` |
-| fact_sales_order (Cabecera de Pedido) | Análisis de órdenes, filtrado por status y canales | order_id_pk | channel_id, date_id, customer_id |
-| fact_web_session (Sesión Web) | Usuarios activos  | session_pk | start_date_id, customer_id |
-| fact_nps_response (Respuesta NPS) | NPS | nps_pk | date_id, customer_id, channel_id |
+| ```fact_sales_order``` (Cabecera de Pedido) | Análisis de órdenes, filtrado por status y canales | ```order_id_pk``` | ```channel_id```, ```date_id```, ```customer_id``` |
+| ```fact_web_session``` (Sesión Web) | Usuarios activos  | ```session_pk``` | ```start_date_id```, ```customer_id``` |
+| ```fact_nps_response``` (Respuesta NPS) | NPS | ```nps_pk``` | ```date_id```, ```customer_id```, ```channel_id``` |
 
 **B- Tablas de Dimensiones - Dimension Tables**
-| Tabla | Origen (RAW) | Propósito Analítico |
-|---|---|---|
-| dim_calendar | Generada en ETL | Series temporales y agrupación mensual/trimestral |
-| dim_customers | customer | Segmentación de usuarios activos y NPS |
-| dim_products | product, product_category | Filtro por Producto (Classic A y Sport B) |
-| dim_channel | channel | Filtro por Canal de Venta (Online/Offline) |
-| dim_province | province, address | Análisis geográfico (Ventas por provincia) |
+| Tabla | Propósito Analítico |
+|---|---|
+| ```dim_calendar``` | Series temporales y agrupación mensual/trimestral |
+| ```dim_customers``` | Segmentación de usuarios activos y NPS |
+| ```dim_products``` | Filtro por Producto (Classic A y Sport B) |
+| ```dim_channel``` | Filtro por Canal de Venta (Online/Offline) |
+| ```dim_province``` |Análisis geográfico (Ventas por provincia) |
 
 **C- Supuestos del modelado**
 
@@ -91,27 +91,27 @@ Se considera un usuario activo si tiene un customer_id conocido en web_session, 
 
 ## Esquemas estrella
 
-**1. Esquema Estrella: Ventas (`FACT_SALES`)**
+**1. Esquema Estrella: Ventas (```FACT_SALES```)**
 
 ![Diagrama de Esquema Estrella para Fact_Sales](assets/Fact_Sales.png)
 
-**2. Esquema Estrella: Cabecera de pedido (`FACT_SALES_ORDER`)**
+**2. Esquema Estrella: Cabecera de pedido (```FACT_SALES_ORDER```)**
 
 ![Diagrama de Esquema Estrella para Fact_Sales_Order](assets/Fact_Sales_Order.png)
 
-**3. Esquema Estrella: Satisfacción (`FACT_NPS`)**
+**3. Esquema Estrella: Satisfacción (```FACT_NPS```)**
 
 ![Diagrama de Esquema Estrella para Fact_NPS](assets/Fact_NPS.png)
 
-**4. Esquema Estrella: Actividad Web (`FACT_WEB_SESSION`)**
+**4. Esquema Estrella: Actividad Web (```FACT_WEB_SESSION```)**
 
 ![Diagrama de Esquema Estrella para Fact_Web_Session](assets/Fact_Web_Session.png)
 
-**5. Esquema Estrella: Logística (`FACT_SHIPMENT`)**
+**5. Esquema Estrella: Logística (```FACT_SHIPMENT```)**
 
 ![Diagrama de Esquema Estrella para Fact_Shipment](assets/Fact_Shipment.png)
 
-**6. Esquema Estrella: Pagos (`FACT_PAYMENT`)**
+**6. Esquema Estrella: Pagos (```FACT_PAYMENT```)**
 
 ![Diagrama de Esquema Estrella para Fact_Payment](assets/Fact_Payment.png)
 
