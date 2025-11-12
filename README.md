@@ -1,4 +1,4 @@
-<img src="assets/Eco_Bottle_Logo.png" alt="Logo de EcoBottle AR" height="30" style="vertical-align: middle;"> 
+# <img src="assets/Eco_Bottle_Logo.png" alt="Logo de EcoBottle AR" width="25"> TP Final: Ecosistema de Datos de Marketing (EcoBottle)
 # Trabajo Práctico Final EcoBottle — Introducción al Marketing Online y los Negocios Digitales
 
 El presente trabajo práctico tiene como objetivo aplicar los conocimientos adquiridos **sobre procesos ETL (Extract, Transform, Load), modelado de datos y visualización de información**, desarrollando un **Data Warehouse** y un **dashboard analítico** en Power BI.
