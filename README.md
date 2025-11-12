@@ -48,18 +48,6 @@ Tras la ejecución exitosa, la carpeta warehouse/ contendrá las subcarpetas dim
 
 El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino listo para el análisis (warehouse/).
 
-| Directorio | Contenido | Rol en el *Pipeline* |
-|---|---|---|
-| ```raw/``` | Archivos .CSV fuente que simulan la base de datos transaccional (OLTP) | *Fuente de datos* (Extracción) |
-| ```etl/``` | scripts de Python (transform_dims.py, transform_facts.py) com lógica de negocio | *Transformación* (Lógica de limpieza y modelado) |
-| ```main.py``` | Script orquestador que ejecuta la secuencia completa del ETL | *Control y Ejecución* del pipeline |
-| ```warehouse/``` | Archivos .CSV finales listos para ser consumidos por Power BI | *Data Warehouse* (Carga) |
-| ```dashboard``` | El tablero final de visualización de datos de EcoBottle, creado en Power BI | *Visualización* (Frontend Analítico) |
-| ```requirements.txt``` | Lista de librerías y versiones exactas para la gestión del entorno virtual | *Buenas Prácticas* (Entorno) |
-| ```assets/``` | Contiene los diagramas y capturas de pantalla de los esquemas estrella | *Documentación Visual* y entregables |
-| ```venv``` | Carpeta que contiene el entorno visual aislado | *Buenas prácticas* (Aislamiento de dependencias) |
-
-
 ```
 ├── assets/                  # Diagramas, capturas o imágenes del proyecto
 ├── dashboard.pbix           # Entregable final: Tablero de visualización de Power BI.
