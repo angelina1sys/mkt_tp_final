@@ -19,7 +19,7 @@ Para reproducir el pipeline de datos, sigue los siguientes pasos desde la termin
 
 **1️⃣ Clonar el Repositorio**
 
-**Cambia 'TU_USUARIO' por tu nombre de usuario de GitHub**
+Cambia 'TU_USUARIO' por tu nombre de usuario de GitHub
 git clone https://github.com/TU_USUARIO/mkt_tp_final.git
 cd mkt_tp_final
 
@@ -38,10 +38,12 @@ Activar en Windows (PowerShell)
 pip install -r requirements.txt
 
 **4️⃣ Ejecutar el Pipeline de transformación**
+
 El script main.py leerá los datos de data/raw/, construirá el esquema estrella y guardará los resultados en warehouse/.
 python main.py
 
 **5️⃣ Verificar la salida**
+
 Tras la ejecución exitosa, la carpeta warehouse/ contendrá las subcarpetas dim/ y fact/ con los datos transformados listos para ser usados en Power BI.
 
 
