@@ -1,3 +1,4 @@
+:recycle: 
 # Trabajo Práctico Final EcoBottle — Introducción al Marketing Online y los Negocios Digitales
 
 El objetivo es diseñar e implementar un mini-ecosistema de datos comercial (online + offline) para la empresa ficticia EcoBottle AR. El pipeline utiliza datos transaccionales (RAW) para construir un Data Warehouse dimensional (Esquema Estrella) y alimentar un Dashboard de Looker Studio con KPIs clave para el área comercial.
