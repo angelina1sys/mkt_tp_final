@@ -50,7 +50,7 @@ Tras la ejecución exitosa, la carpeta warehouse/ contendrá las subcarpetas dim
 
 ---
 
-## 🗂️ Arquitectura del Proyecto (Estructura ETL)
+## 🗂️ Arquitectura del Proyecto
 
 El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino listo para el análisis (warehouse/).
 
