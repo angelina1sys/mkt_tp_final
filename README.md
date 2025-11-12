@@ -1,6 +1,15 @@
 # ♻️ Trabajo Práctico Final EcoBottle — Introducción al Marketing Online y los Negocios Digitales
 
-El objetivo es diseñar e implementar un mini-ecosistema de datos comercial (online + offline) para la empresa ficticia EcoBottle AR. El pipeline utiliza datos transaccionales (RAW) para construir un Data Warehouse dimensional (Esquema Estrella) y alimentar un Dashboard de Looker Studio con KPIs clave para el área comercial.
+El presente trabajo práctico tiene como objetivo aplicar los conocimientos adquiridos **sobre procesos ETL (Extract, Transform, Load), modelado de datos y visualización de información**, desarrollando un **Data Warehouse** y un **dashboard analítico** en Power BI.
+
+A partir de un conjunto de datos transaccionales de una empresa de comercio electrónico, se buscó:
+
+• Diseñar e implementar un **proceso ETL completo en Python**, capaz de extraer, transformar y cargar los datos desde distintas fuentes.
+• Construir un **modelo dimensional (esquema en estrella)** que permita analizar métricas de negocio como ventas, clientes, productos, pagos y envíos.
+• Generar **tablas desnormalizadas** dentro de la carpeta DW/ para su consumo directo desde herramientas de BI.
+• Diseñar un **dashboard interactivo** en Power BI que muestre los principales indicadores de gestión y rendimiento.
+
+El proyecto fue desarrollado siguiendo buenas prácticas de ingeniería de datos: modularización del código, control de versiones con Git, entorno virtual gestionado con ```venv``` y documentación completa mediante este archivo ```README.md```.
 
 ## Instrucciones de Ejecución Local:
 Para reproducir el pipeline de datos, sigue los siguientes pasos desde la terminal.
@@ -35,7 +44,7 @@ Tras la ejecución exitosa, la carpeta warehouse/ contendrá las subcarpetas dim
 
 ---
 
-## Arquitectura del Proyecto (Estructura ETL)
+## 🗂️ Arquitectura del Proyecto (Estructura ETL)
 
 El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino listo para el análisis (warehouse/).
 
@@ -51,8 +60,21 @@ El proyecto organiza el flujo de datos desde el origen (RAW) hasta el destino li
 | ```venv``` | Carpeta que contiene el entorno visual aislado | *Buenas prácticas* (Aislamiento de dependencias) |
 
 
-
-
+.
+├── assets/                  # Diagramas, capturas o imágenes del proyecto
+├── dashboard.pbix           # Entregable final: Tablero de visualización de Power BI.
+├── etl/                     # Lógica ETL (Extract, Transform, Load) en scripts Python
+│   ├── transform_dims.py    # Scripts para la creación y desnormalización de Dimensiones.
+│   └── transform_facts.py   # Scripts para la creación de Tablas de Hechos
+├── RAW/                     # Datos fuente originales (.csv) provistos por el profesor
+├── warehouse/               # Data Warehouse (DW) - Contiene los archivos .csv finales listos para el análisis
+│   ├── dim/                 # Tablas de Dimensiones desnormalizadas
+│   └── fact/                # Tablas de Hechos desnormalizadas
+├── .gitignore               # Archivos y carpetas ignorados por Git.
+├── LICENSE                  # Licencia del proyecto.
+├── main.py                  # Script principal para orquestar la ejecución del ETL
+├── requirements.txt         # Archivo con las dependencias Python requeridas 
+└── README.md                # Documentación del proyecto
 
 
 ## Diccionario de datos y supuestos
