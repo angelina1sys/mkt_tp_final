@@ -5,8 +5,11 @@ El presente trabajo práctico tiene como objetivo aplicar los conocimientos adqu
 A partir de un conjunto de datos transaccionales de una empresa de comercio electrónico, se buscó:
 
 • Diseñar e implementar un **proceso ETL completo en Python**, capaz de extraer, transformar y cargar los datos desde distintas fuentes.
+
 • Construir un **modelo dimensional (esquema en estrella)** que permita analizar métricas de negocio como ventas, clientes, productos, pagos y envíos.
+
 • Generar **tablas desnormalizadas** dentro de la carpeta DW/ para su consumo directo desde herramientas de BI.
+
 • Diseñar un **dashboard interactivo** en Power BI que muestre los principales indicadores de gestión y rendimiento.
 
 El proyecto fue desarrollado siguiendo buenas prácticas de ingeniería de datos: modularización del código, control de versiones con Git, entorno virtual gestionado con ```venv``` y documentación completa mediante este archivo ```README.md```.
@@ -22,15 +25,14 @@ cd mkt_tp_final```
 
 ## 2️⃣ Crear y Activar un Entorno Visual
 
+**Crear entorno virtual**
+```python3 -m venv .venv```
 
-```# Crear entorno virtual
-python3 -m venv .venv
+**Activar en macOS/Linux**
+```source .venv/bin/activate```
 
-# Activar en macOS/Linux
-source .venv/bin/activate
-
-# Activar en Windows (PowerShell)
-.\.venv\Scripts\Activate```
+**Activar en Windows (PowerShell)**
+```.\.venv\Scripts\Activate```
 
 ## 3- Instalar dependencias
 pip install -r requirements.txt
