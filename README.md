@@ -81,7 +81,7 @@ El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar
 |---|---|---|---|
 | ```fact_sales_order``` (Cabecera de Pedido) | Total amount, análisis por canal y cliente | ```order_id_pk``` | ```date_id```, ```customer_id```, ```channel_id```, ```store_id```, ```shipping_province_id``` |
 | ```fact_sales_order_item``` (Línea de Pedido) | Ventas totales, análisis de cantidad vendida, ranking por producto | ```order_item_pk``` | ```channel_id```, ```date_id```, ```customer_id```, ```product_id```, ```store_id```, ```shipping_province_id``` |
-| ```fact_web_session``` (Sesión Web) | Usuarios activos  | ```session_pk``` | ```start_date_id```, ```customer_id``` |
+| ```fact_web_session``` (Sesión Web) | Usuarios activos  | ```session_pk``` | ```date_id```, ```customer_id``` |
 | ```fact_nps_response``` (Respuesta NPS) | NPS | ```nps_pk``` | ```date_id```, ```customer_id```, ```channel_id``` |
 
 **📊 Tablas de Dimensiones - Dimension Tables**
