@@ -94,6 +94,7 @@ El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar
 | ```dim_products``` | Filtro por Producto (Classic A y Sport B) |
 | ```dim_channel``` | Filtro por Canal de Venta (Online/Offline) |
 | ```dim_province``` |Análisis geográfico (Ventas por provincia) |
+| ```dim_stores``` |Análisis de rendimiento por tienda y ubicación |
 
 **🧩 Supuestos del modelado**
 
