@@ -84,7 +84,7 @@ El Data Warehouse se diseñó bajo el Esquema Estrella de Kimball para optimizar
 | ```fact_web_session``` (Sesión Web) | Usuarios activos  | ```session_pk``` | ```date_id```, ```customer_id``` |
 | ```fact_nps_response``` (Respuesta NPS) | NPS | ```nps_pk``` | ```date_id```, ```customer_id```, ```channel_id``` |
 | ```fact_payment``` (Transacción de Pago) | Tiempo promedio de entrega | ```payment_pk``` | ```date_id``` |
-| fact_shipment (Envío) | Tiempo promedio de entrega | ```shipment_pk``` | ```shipped_date_id```, ```shipping_province_id``` |
+| ```fact_shipment``` (Envío) | Tiempo promedio de entrega | ```shipment_pk``` | ```shipped_date_id```, ```shipping_province_id``` |
 
 **📊 Tablas de Dimensiones - Dimension Tables**
 | Tabla | Propósito Analítico |
