@@ -159,4 +159,3 @@ Esta sección describe la lógica (DAX) para calcular los KPIs en el dashboard.
 
 https://app.powerbi.com/view?r=eyJrIjoiNzk2ODA3MzItMmJmZC00M2VlLWE2MDAtZTAwYjEwMjcyMzBkIiwidCI6IjNlMDUxM2Q2LTY4ZmEtNDE2ZS04ZGUxLTZjNWNkYzMxOWZmYSIsImMiOjR9
 
-
